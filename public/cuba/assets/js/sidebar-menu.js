@@ -189,18 +189,35 @@ $("#left-arrow").click(function () {
 $(".sidebar-wrapper nav").find("a").removeClass("active");
 $(".sidebar-wrapper nav").find("li").removeClass("active");
 
-var current = window.location.pathname
-$(".sidebar-wrapper nav ul>li a").filter(function () {
+// var current = window.location.pathname
+// $(".sidebar-wrapper nav ul>li a").filter(function () {
 
+//     var link = $(this).attr("href");
+//     if (link) {
+//         if (current.indexOf(link) != -1) {
+//             $(this).parents().children('a').addClass('active');
+//             $(this).parents().parents().children('ul').css('display', 'block');
+//             $(this).addClass('active');
+//             $(this).parent().parent().parent().children('a').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
+//             $(this).parent().parent().parent().parent().parent().children('a').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
+//             return false;
+//         }
+//     }
+// });
+
+// active sidebar after reload is not reset
+var current = window.location.pathname;
+$(".sidebar-wrapper nav ul>li a").each(function () {
     var link = $(this).attr("href");
+
     if (link) {
-        if (current.indexOf(link) != -1) {
-            $(this).parents().children('a').addClass('active');
-            $(this).parents().parents().children('ul').css('display', 'block');
-            $(this).addClass('active');
-            $(this).parent().parent().parent().children('a').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
-            $(this).parent().parent().parent().parent().parent().children('a').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
-            return false;
+        var pathOnly = new URL(link, window.location.origin).pathname;
+        if (current === pathOnly) {
+            $(this).addClass("active");
+            $(this).parents("ul").css("display", "block");
+            $(this).closest("li.sidebar-list").children("a.sidebar-title").addClass("active");
+            $(this).closest("li.sidebar-list").children("a.sidebar-title").find(".according-menu i")
+                .removeClass("fa-angle-right").addClass("fa-angle-down");
         }
     }
 });
