@@ -3,29 +3,24 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Galleries;
+use App\Models\Gallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
-    /**
+    /** 
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $items = Galleries::all();
+        $items = Gallery::orderBy('id', 'desc')->get();
 
-        return view('pages.backend.galleries.index', [
-            'items' => $items
-        ]);
+        return view('pages.backend.galleries.index', compact('items'));
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -34,76 +29,101 @@ class GalleryController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'foto' => 'file|image|mimes:jpeg,png,jpg|max:5120',
+        $request->validate([
+            'foto' => 'required|image|mimes:jpeg,png,jpg|max:5120',
+            'caption' => 'nullable|string|max:255',
         ]);
 
+        // Upload file
+        $filename = null;
+
         if ($request->hasFile('foto')) {
-            $resource = $request->file('foto');
-            $name = $resource->getClientOriginalName();
-            $finalName = date('His')  . $name;
-            $request->file('foto')->storeAs('images/', $finalName, 'public');
-            Galleries::create([
-                'foto' => $finalName,
-            ]);
-        } else {
-            echo "gagal";
+
+            $filename = time() . '-' . uniqid() . '.' . $request->file('foto')->extension();
+
+            // simpan foto ke storage/app/public/images
+            $request->file('foto')->storeAs('images', $filename, 'public');
         }
 
-        return redirect()->route('galleries.index');
-    }
+        // Simpan ke database
+        Gallery::create([
+            'foto' => $filename,
+            'caption' => $request->caption,
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()->route('galleries.index')
+            ->with('success', 'Foto berhasil ditambahkan.');
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $item = Gallery::findOrFail($id);
+
+        return view('pages.backend.galleries.edit', compact('item'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        $item = Gallery::findOrFail($id);
+
+        $request->validate([
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
+            'caption' => 'nullable|string|max:255',
+        ]);
+
+        // Upload foto baru jika ada
+        if ($request->hasFile('foto')) {
+
+            // Hapus foto lama jika ada
+            if (!empty($item->foto) && Storage::disk('public')->exists('images/' . $item->foto)) {
+                Storage::disk('public')->delete('images/' . $item->foto);
+            }
+
+            $newFile = time() . '-' . uniqid() . '.' . $request->file('foto')->extension();
+            $request->file('foto')->storeAs('images', $newFile, 'public');
+
+            $item->foto = $newFile;
+        }
+
+        // Update caption
+        $item->caption = $request->caption;
+
+        $item->save();
+
+        return redirect()->route('galleries.index')
+            ->with('success', 'Data berhasil diperbarui.');
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $item = Galleries::findOrFail($id);
+        $item = Gallery::findOrFail($id);
+
+        // Hapus foto di storage
+        if (!empty($item->foto)) {
+
+            $filePath = 'images/' . $item->foto;
+
+            if (Storage::disk('public')->exists($filePath)) {
+                Storage::disk('public')->delete($filePath);
+            }
+        }
+
+        // Hapus record database
         $item->delete();
 
-        return redirect()->route('galleries.index');
+        return redirect()->route('galleries.index')
+            ->with('success', 'Foto berhasil dihapus.');
     }
 }

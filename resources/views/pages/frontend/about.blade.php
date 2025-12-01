@@ -5,99 +5,155 @@
 
         <!-- ========================
                        page title
-                    =========================== -->
-        <section class="page-title page-title-layout1 bg-overlay bg-overlay-2 bg-parallax text-center">
-            <div class="bg-img"><img src="{{ url('solatec/assets/images/page-titles/1.jpg') }}" alt="background"></div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <h1 class="pagetitle__heading mb-0">Tentang Kami</h1>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb justify-content-center">
-                                <li class="breadcrumb-item"><a href="#">Beranda</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Tentang Kami</li>
-                            </ol>
-                        </nav>
-                        <a href="#about" class="scroll-down">
-                            <i class="icon-arrow-down"></i>
+=========================== -->
+<section class="page-title page-title-layout1 bg-overlay bg-overlay-2 bg-parallax text-center">
+    <div class="bg-img"><img src="{{ url('solatec/assets/images/page-titles/1.jpg') }}" alt="background"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="pagetitle__heading mb-0">Tentang Kami</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="#">Beranda</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Tentang Kami</li>
+                    </ol>
+                </nav>
+                <a href="#about" class="scroll-down">
+                    <i class="icon-arrow-down"></i>
+                </a>
+            </div><!-- /.col-xl-6 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- /.page-title -->
+
+
+<section class="about-layout1 pt-130 pb-130">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-7 offset-lg-1">
+                <div class="heading__layout2 mb-60">
+                    <h2 class="heading__subtitle">Menjadi Inovasi dan Membantu masyarakat khususnya Kabupaten Cirebon</h2>
+                    <h3 class="heading__title">Mengoptimalkan layanan pengumpulan dan pendistribusian zakat fitrah</h3>
+                </div><!-- /.heading__layout2 -->
+            </div><!-- /.col-lg-7 -->
+        </div><!-- /.row -->
+
+        <div class="row align-items-center">
+            <!-- Counter Column -->
+            <div class="col-sm-12 col-md-12 col-lg-2">
+                <div class="counter-item">
+                    <h4 class="counter">{{ $jumlah_zakat->total_beras }}</h4>
+                    <p class="counter__desc pr-0">Kilogram Beras yang telah di distribusikan</p>
+                    <div class="divider__line"></div>
+                </div>
+                <div class="counter-item">
+                    <h4 class="counter">{{ $jumlah_zakat->total_uang }}</h4>
+                    <p class="counter__desc pr-0">Uang yang telah di distribusikan</p>
+                    <div class="divider__line"></div>
+                </div>
+                <div class="counter-item">
+                    <h4 class="counter">{{ $jumlah_zakat->total_distribusi }}</h4>
+                    <p class="counter__desc pr-0">Total semua distribusi zakat</p>
+                    <div class="divider__line"></div>
+                </div>
+            </div><!-- /.col-lg-2 -->
+
+            <!-- Video Column (Glassmorphism Square) -->
+            <div class="col-sm-12 col-md-12 col-lg-5">
+            <div class="video-container-glass">
+                <div class="video-glass-box">
+                    <iframe 
+                        src="https://www.youtube.com/embed/ZBstLfy2jUU?si=oCQxohGuN36V5kGg"
+                        title="YouTube Video Player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <span class="video-title">BAZNAS On The Road bersama Ketua BAZNAS Kabupaten Cirebon</span>
+                <p>Bersama Ketua BAZNAS Kabupaten Cirebon KH. Ahmad Zaeni Dahlan LC, M.Phil, M.Si memberikan bantuan beras kepada Masyarakat Kabupaten Cirebon.</p>
+            </div>
+        </div><!-- /.col-lg-5 -->
+
+
+            <!-- Text Column -->
+            <div class="col-sm-12 col-md-12 col-lg-5">
+                <div class="about__text">
+                    <div class="text__icon">
+                        <i class="icon-green-energy3"></i>
+                    </div>
+                    <p class="heading__desc font-weight-medium color-secondary mb-30">
+                        Kami memastikan zakat yang anda berikan tepat sasaran dan tepat waktu kepada mereka yang membutuhkan sesuai kategori mustahik yang telah dikategorikan.
+                    </p>
+                    <p class="heading__desc mb-20">
+                        Kami juga mengedepankan transparansi laporan kepada anda yang ingin mendapatkan laporan serta ingin melihat data siapa orang yang para umat islam yang mampu.
+                    </p>
+                    <p class="heading__desc mb-20">
+                        Kami akan selalu memberikan update kepada masyarakat melalui artikel ataupun galeri yang di upload di website ini
+                    </p>
+                    <div class="d-flex align-items-center mt-30">
+                        <a href="{{ url('/article') }}" class="btn btn__secondary mr-30">
+                            <i class="icon-arrow-right"></i> <span>lihat Artikel Terbaru</span>
                         </a>
-                    </div><!-- /.col-xl-6 -->
-                </div><!-- /.row -->
-            </div><!-- /.container -->
-        </section><!-- /.page-title -->
+                    </div>
+                </div><!-- /.about__text -->
+            </div><!-- /.col-lg-5 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- /.About Layout 1 -->
 
 
-        <section class="about-layout1 pt-130 pb-130">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-7 offset-lg-1">
-                        <div class="heading__layout2 mb-60">
-                            <h2 class="heading__subtitle">Menjadi Inovasi dan Membantu DKM Daerah di Indonesia</h2>
-                            <h3 class="heading__title">Mengoptimalkan layanan pengumpulan dan pendistribusian zakat fitrah
-                            </h3>
-                        </div><!-- /.heading__layout2 -->
-                    </div><!-- /.col-lg-7 -->
-                </div><!-- /.row -->
-                <div class="row align-items-center">
-                    <div class="col-sm-12 col-md-12 col-lg-2">
-                        <!-- counter item #1 -->
-                        <div class="counter-item">
-                            <h4 class="counter">{{ $jumlah_zakat->total_beras }}</h4>
-                            <p class="counter__desc pr-0">Kilogram Beras yang telah di distribusikan</p>
-                            <div class="divider__line"></div>
-                        </div>
-                        <!-- counter item #2 -->
-                        <div class="counter-item">
-                            <h4 class="counter">{{ $jumlah_zakat->total_uang }}</h4>
-                            <p class="counter__desc pr-0">Uang yang telah di distribusikan</p>
-                            <div class="divider__line"></div>
-                        </div>
-                        <!-- counter item #3 -->
-                        <div class="counter-item">
-                            <h4 class="counter">{{ $jumlah_zakat->total_distribusi }}</h4>
-                            <p class="counter__desc pr-0">Total semua distribusi zakat</p>
-                            <div class="divider__line"></div>
-                        </div>
-                    </div><!-- /.col-lg-2 -->
-                    <div class="col-sm-12 col-md-12 col-lg-5">
-                        <div class="video-banner-layout2">
-                            <img src="{{ url('solatec/assets/images/about/1.jpg') }}" alt="about" class="w-100">
-                            <div class="video-has-img">
-                                <img src="{{ url('solatec/assets/images/video/1.jpg') }}" alt="video">
-                                <a class="video__btn video__btn-white popup-video"
-                                    href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-                                    <div class="video__player">
-                                        <i class="fa fa-play"></i>
-                                    </div>
-                                </a>
-                                <span class="video__btn-title">Lihat Video DKM!</span>
-                            </div>
-                        </div><!-- /.video-banner -->
-                    </div><!-- /.col-lg-5 -->
-                    <div class="col-sm-12 col-md-12 col-lg-5">
-                        <div class="about__text">
-                            <div class="text__icon">
-                                <i class="icon-green-energy3"></i>
-                            </div>
-                            <p class="heading__desc font-weight-medium color-secondary mb-30">Kami memastikan zakat yang
-                                anda berikan tepat sasaran dan tepat waktu kepada mereka yang membutuhkan sesuai kategori
-                                mustahik yang telah dikategorikan.</p>
-                            </p>
-                            <p class="heading__desc mb-20">Kami juga mengedepankan transparansi laporan kepada anda yang
-                                ingin mendapatkan laporan serta ingin melihat data siapa orang yang para umat islam yang
-                                mampu.</p>
-                            <p class="heading__desc mb-20">DKM akan selalu memberikan update kepada masyarakat melalu
-                                artikel ataupun galeri yang di upload di website ini</p>
-                            <div class="d-flex align-items-center mt-30">
-                                <a href="{{ url('/article') }}" class="btn btn__secondary mr-30">
-                                    <i class="icon-arrow-right"></i> <span>lihat Artikel Terbaru</span>
-                                </a>
-                            </div>
-                        </div><!-- /.about__text -->
-                    </div><!-- /.col-lg-5 -->
-                </div><!-- /.row -->
-            </div><!-- /.container -->
-        </section><!-- /.About Layout 1 -->
+<!-- ========================
+    VIDEO GLASSMORPHISM CSS
+=========================== -->
+<style>
+.video-container-glass {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.video-glass-box {
+    width: 100%;
+    max-width: 470px;
+    height: 420px; /* square */
+    border-radius: 22px;
+    overflow: hidden;
+    position: relative;
+
+    /* Glassmorphism */
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0px 15px 40px rgba(0,0,0,0.18);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-glass-box iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.video-title {
+    margin-top: 15px;
+    font-size: 17px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .video-glass-box {
+        max-width: 320px;
+        height: 320px;
+    }
+}
+</style>
 
         <!-- ======================
                                                                                                                                                           services Layout 2
@@ -270,7 +326,7 @@
                                 <div class="post__body">
                                     <div class="post__meta d-flex align-items-center">
                                         <div class="post__cat">
-                                            <a href="#">Kabar DKM Terkini</a>
+                                            <a href="#">Berita Terkini</a>
                                         </div><!-- /.post-meta-cat -->
                                         <a class="post__author" href="#">Administrator</a>
                                     </div><!-- /.post-meta -->

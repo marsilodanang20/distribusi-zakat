@@ -1,135 +1,87 @@
 @extends('layouts.frontend.master')
-
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 @section('content')
     <div class="wrapper">
         <!-- ============================
                                                                                                                                                 Slider
                                                                                                                                             ============================== -->
-        <section class="slider">
+                <section class="slider">
             <div class="slick-carousel carousel-arrows-light carousel-dots-light m-slides-0"
-                data-slick='{"slidesToShow": 1, "arrows": true, "dots": true, "speed": 700,"fade": true,"cssEase": "linear"}'>
-                <div class="slide-item align-v-h bg-overlay bg-overlay-2">
-                    <div class="bg-img"><img src="{{ url('solatec/assets/images/sliders/8.jpg') }}" alt="slide img"></div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8">
-                                <div class="slide__body">
-                                    <span class="slide__subtitle">Pengelolaan, Distribusi dan Pelaporan Zakat Fitrah</span>
-                                    <h2 class="slide__title">Kami Mendigitalisasi Pembayaran Zakat Fitrah di Indonesia</h2>
-                                    <p class="slide__desc">Jadikan pengalaman pembayaran dan pengelolaan zakat fitrah
-                                        menjadi lebih mudah dan nyaman dengan aplikasi Zaqat.</p>
-                                    </p>
-                                    <div class="d-flex">
-                                        <a href="{{ url('/about') }}" class="btn btn__primary mr-30">
-                                            <i class="icon-arrow-right"></i><span>Tentang Kami</span>
-                                        </a>
-                                        <a href="https://api.whatsapp.com/send?phone=85156162840&text=Halo%2C%20saya%20ingin%20membayar%20zakat.%20Boleh%20tanya%20jam%20berapa%20bapak%20ada%20di%20masjid%3F"
-                                            class="btn btn__white">Pengumpulan Zakat</a>
-                                    </div>
-                                </div><!-- /.slide__body -->
-                            </div><!-- /.col-xl-8 -->
-                        </div><!-- /.row -->
-                    </div><!-- /.container -->
-                </div><!-- /.slide-item -->
-                <div class="slide-item align-v-h bg-overlay">
-                    <div class="bg-img"><img src="{{ url('solatec/assets/images/sliders/9.jpg') }}" alt="slide img"></div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8">
-                                <div class="slide__body">
-                                    <span class="slide__subtitle">Pengelolaan, Distribusi dan Pelaporan Zakat Fitrah</span>
-                                    <h2 class="slide__title">Zaqat Membantu DKM Mengelola Data Zakat Fitrah!</h2>
-                                    <p class="slide__desc">Aplikasi kami dibuat khusus untuk DKM dari semua masjid agar
-                                        mempunyai sistem zakat yang efisien dan optimal.</p>
-                                    <div class="d-flex">
-                                        <a href="{{ url('/about') }}" class="btn btn__primary mr-30">
-                                            <i class="icon-arrow-right"></i><span>Tentang Kami</span>
-                                        </a>
-                                        <a href="https://api.whatsapp.com/send?phone=85156162840&text=Halo%2C%20saya%20ingin%20membayar%20zakat.%20Boleh%20tanya%20jam%20berapa%20bapak%20ada%20di%20masjid%3F"
-                                            class="btn btn__white">Pengumpulan Zakat</a>
-                                    </div>
-                                </div><!-- /.slide__body -->
-                            </div><!-- /.col-xl-8 -->
-                        </div><!-- /.row -->
-                    </div><!-- /.container -->
-                </div><!-- /.slide-item -->
-            </div><!-- /.carousel -->
-        </section><!-- /.slider -->
+                data-slick='{
+                    "slidesToShow": 1,
+                    "arrows": true,
+                    "dots": true,
+                    "speed": 700,
+                    "fade": true,
+                    "cssEase": "linear",
+                    "autoplay": true,
+                    "autoplaySpeed": 4500,
+                    "pauseOnHover": false
+                }'>
 
-        <!-- ========================
-                                                                                                                                                About Layout 1
-                                                                                                                                              =========================== -->
-        <section class="about-layout1 pt-130 pb-130">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-7 offset-lg-1">
-                        <div class="heading__layout2 mb-60">
-                            <h2 class="heading__subtitle">Menjadi Inovasi dan Membantu DKM Daerah di Indonesia</h2>
-                            <h3 class="heading__title">Mengoptimalkan layanan pengumpulan dan pendistribusian zakat fitrah
-                            </h3>
-                        </div><!-- /.heading__layout2 -->
-                    </div><!-- /.col-lg-7 -->
-                </div><!-- /.row -->
-                <div class="row align-items-center">
-                    <div class="col-sm-12 col-md-12 col-lg-2">
-                        <!-- counter item #1 -->
-                        <div class="counter-item">
-                            <h4 class="counter">{{ $jumlah_zakat->total_beras }}</h4>
-                            <p class="counter__desc pr-0">Kilogram Beras yang telah di distribusikan</p>
-                            <div class="divider__line"></div>
-                        </div>
-                        <!-- counter item #2 -->
-                        <div class="counter-item">
-                            <h4 class="counter">{{ $jumlah_zakat->total_uang }}</h4>
-                            <p class="counter__desc pr-0">Uang yang telah di distribusikan</p>
-                            <div class="divider__line"></div>
-                        </div>
-                        <!-- counter item #3 -->
-                        <div class="counter-item">
-                            <h4 class="counter">{{ $jumlah_zakat->total_distribusi }}</h4>
-                            <p class="counter__desc pr-0">Total semua distribusi zakat</p>
-                            <div class="divider__line"></div>
-                        </div>
-                    </div><!-- /.col-lg-2 -->
-                    <div class="col-sm-12 col-md-12 col-lg-5">
-                        <div class="video-banner-layout2">
-                            <img src="{{ url('solatec/assets/images/about/1.jpg') }}" alt="about" class="w-100">
-                            <div class="video-has-img">
-                                <img src="{{ url('solatec/assets/images/video/1.jpg') }}" alt="video">
-                                <a class="video__btn video__btn-white popup-video"
-                                    href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-                                    <div class="video__player">
-                                        <i class="fa fa-play"></i>
-                                    </div>
-                                </a>
-                                <span class="video__btn-title">Lihat Video DKM!</span>
-                            </div>
-                        </div><!-- /.video-banner -->
-                    </div><!-- /.col-lg-5 -->
-                    <div class="col-sm-12 col-md-12 col-lg-5">
-                        <div class="about__text">
-                            <div class="text__icon">
-                                <i class="icon-green-energy3"></i>
-                            </div>
-                            <p class="heading__desc font-weight-medium color-secondary mb-30">Kami memastikan zakat yang
-                                anda berikan tepat sasaran dan tepat waktu kepada mereka yang membutuhkan sesuai kategori
-                                mustahik yang telah dikategorikan.</p>
-                            </p>
-                            <p class="heading__desc mb-20">Kami juga mengedepankan transparansi laporan kepada anda yang
-                                ingin mendapatkan laporan serta ingin melihat data siapa orang yang para umat islam yang
-                                mampu.</p>
-                            <p class="heading__desc mb-20">DKM akan selalu memberikan update kepada masyarakat melalu
-                                artikel ataupun galeri yang di upload di website ini</p>
-                            <div class="d-flex align-items-center mt-30">
-                                <a href="{{ url('/article') }}" class="btn btn__secondary mr-30">
-                                    <i class="icon-arrow-right"></i> <span>lihat Artikel Terbaru</span>
-                                </a>
-                            </div>
-                        </div><!-- /.about__text -->
-                    </div><!-- /.col-lg-5 -->
-                </div><!-- /.row -->
-            </div><!-- /.container -->
-        </section><!-- /.About Layout 1 -->
+                <!-- SLIDE 1 -->
+                <div class="slide-item bg-overlay bg-overlay-2">
+                <div class="bg-img">
+                    <img src="{{ url('solatec/assets/images/sliders/8.jpg') }}" alt="slide img">
+                </div>
+
+                <div class="slide__centered">
+                    <span class="slide__subtitle" style="font-size: clamp(18px, 2.2vw, 26px); font-weight:600;">
+                    Selamat Datang di Baznas Kabupaten Cirebon
+                    </span>
+
+                    <h2 class="slide__title" style="font-size: clamp(32px, 5.3vw, 62px);">
+                    Melayani Distribusi Zakat dengan Amanah & Transparan
+                    </h2>
+
+                    <div class="slide__buttons">
+                    <a href="{{ url('/about') }}" class="btn btn__primary">
+                        <i class="icon-arrow-right"></i>
+                        <span>Tentang Kami</span>
+                    </a>
+
+                    <a href="https://baznascirebonkab.or.id/bayarzakat"
+                        class="btn btn__white">
+                        Bayar Zakat
+                    </a>
+                    </div>
+                </div>
+                </div>
+
+
+                <!-- SLIDE 2 -->
+                <div class="slide-item bg-overlay bg-overlay-2">
+                <div class="bg-img">
+                    <img src="{{ url('solatec/assets/images/sliders/9.jpg') }}" alt="slide img">
+                </div>
+
+                <div class="slide__centered">
+                    <span class="slide__subtitle" style="font-size: clamp(18px, 2.2vw, 26px); font-weight:600;">
+                    Dari Hati untuk Umat di Cirebon
+                    </span>
+
+                    <h2 class="slide__title" style="font-size: clamp(32px, 5.3vw, 62px);">
+                    Bantu Wujudkan Kesejahteraan melalui Zakat Tepat Sasaran
+                    </h2>
+
+                    <div class="slide__buttons">
+                    <a href="{{ url('/about') }}" class="btn btn__primary">
+                        <i class="icon-arrow-right"></i>
+                        <span>Tentang Kami</span>
+                    </a>
+
+                    <a href="https://baznascirebonkab.or.id/bayarzakat"
+                        class="btn btn__white">
+                        Bayar Zakat
+                    </a>
+                    </div>
+                </div>
+                </div>
+
+
+            </div>
+        </section>
+
 
         <!-- ======================
                                                                                                                                               services Layout 2
@@ -302,7 +254,7 @@
                                 <div class="post__body">
                                     <div class="post__meta d-flex align-items-center">
                                         <div class="post__cat">
-                                            <a href="#">Kabar DKM Terkini</a>
+                                            <a href="#">Berita Terkini</a>
                                         </div><!-- /.post-meta-cat -->
                                         <a class="post__author" href="#">Administrator</a>
                                     </div><!-- /.post-meta -->

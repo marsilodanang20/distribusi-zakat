@@ -1,6 +1,6 @@
 @extends('layouts.backend.master')
 
-@section('title', 'Data Muzakki — Zaqat')
+@section('title', 'Data Muzakki — Baznas Kabupaten Cirebon')
 @section('content')
 
     @push('datatable-styles')

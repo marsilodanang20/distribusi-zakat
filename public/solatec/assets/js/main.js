@@ -225,7 +225,7 @@ $(function () {
     /*==========  NiceSelect Plugin  ==========*/
     $('select').niceSelect();
 
-    /*==========   portfolio Filtering and Sorting  ==========*/
+   /*==========   portfolio Filtering and Sorting  ==========*/
     $("#filtered-items-wrap").mixItUp();
     $(".portfolio-filter li a").on("click", function (e) {
         e.preventDefault();
@@ -233,23 +233,29 @@ $(function () {
 
     var contactForm = $("#contactForm"),
         contactResult = $('.contact-result');
+
     contactForm.validate({
         debug: false,
         submitHandler: function (contactForm) {
             $(contactResult, contactForm).html('Please Wait...');
             $.ajax({
                 type: "POST",
-                url: "assets/php/contact.php",
-                data: $(contactForm).serialize(),
+                url: "/kirim-ajuan",
+                data: $(contactForm).serialize() + "&_token=" + $('meta[name="csrf-token"]').attr('content'),
                 timeout: 20000,
                 success: function (msg) {
-                    $(contactResult, contactForm).html('<div class="alert alert-success" role="alert"><strong>Thank you. We will contact you shortly.</strong></div>').delay(3000).fadeOut(2000);
+                    $(contactResult, contactForm).html(
+                        '<div class="alert alert-success" role="alert"><strong>Thank you. We will contact you shortly.</strong></div>'
+                    ).delay(3000).fadeOut(2000);
                 },
-                error: $('.thanks').show()
+                error: function(){
+                    alert("Gagal mengirim pesan. Silahkan coba lagi.");
+                }
             });
             return false;
         }
     });
+
     /*==========   Range Slider  ==========*/
     var $rangeSlider = $("#rangeSlider"),
         $rangeSliderResult = $("#rangeSliderResult");

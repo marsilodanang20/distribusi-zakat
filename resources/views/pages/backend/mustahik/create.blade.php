@@ -1,6 +1,6 @@
 @extends('layouts.backend.master')
 
-@section('title', 'Tambah Data Mustahik — Zaqat')
+@section('title', 'Tambah Data Mustahik — Baznas Kabupaten Cirebon')
 @section('content')
 
     @push('timepicker-styles')

@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
+<head>
+    @include('includes.frontend.head')
+</head>
 
-@include('includes.frontend.head')
+<body>
 
 <div class="preloader">
     <div class="loading"><span></span><span></span><span></span><span></span></div>
-</div><!-- /.preloader -->
+</div>
 
 <!--====== Start Header ======-->
 @include('includes.frontend.navbar')
@@ -18,6 +21,7 @@
 <!--====== End Footer ======-->
 
 @include('includes.frontend.script')
+
 </body>
 
 </html>

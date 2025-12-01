@@ -58,6 +58,10 @@ Route::prefix('dashboard')
         /* --------------------------- Kelola Data Website -------------------------- */
         Route::resource('articles', 'App\Http\Controllers\Backend\ArticleController');
         Route::resource('galleries', 'App\Http\Controllers\Backend\GalleryController');
-    });
+
+    // routes/web.php
+            Route::post('/kirim-ajuan', 'App\Http\Controllers\Backend\ContactController@send')
+            ->name('contact.send');
+        });
 
 require __DIR__ . '/auth.php';

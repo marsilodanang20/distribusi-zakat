@@ -1,6 +1,6 @@
 @extends('layouts.backend.master')
 
-@section('title', 'Tambah Data Kategori Mustahik — Zaqat')
+@section('title', 'Tambah Data Kategori Mustahik — Baznas Kabupaten Cirebon')
 @section('content')
 
     <!-- file wrapper for better tabs start-->

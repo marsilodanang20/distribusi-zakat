@@ -1,6 +1,6 @@
 @extends('layouts.backend.master')
 
-@section('title', 'Selamat datang di Dashboard Zaqat ' . Auth::user()->name . '!')
+@section('title', 'Selamat datang di Dashboard Distribusi Zakat | Baznas Kabupaten Cirebon ' . Auth::user()->name . '!')
 @section('content')
 
     @push('datatable-styles')

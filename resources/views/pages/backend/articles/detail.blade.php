@@ -1,6 +1,6 @@
 @extends('layouts.backend.master')
 
-@section('title', $item->judul . '— Ciradyka Pramuka SMAN 1 Ciamis')
+@section('title', $item->judul . '— Baznas Kabupaten Cirebon')
 @section('content')
 
 <style>

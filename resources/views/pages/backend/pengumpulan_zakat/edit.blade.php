@@ -1,6 +1,6 @@
 @extends('layouts.backend.master')
 
-@section('title', 'Update Data Pengumpulan Zakat — Zaqat')
+@section('title', 'Update Data Pengumpulan Zakat — Baznas Kabupaten Cirebon')
 @section('content')
 
     @push('timepicker-styles')

@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Zaqat adalah website yang bertujuan untuk pengelolaan zakat beserta pembuatan laporannya di daerah anda">
-    <meta name="keywords" content="Zaqat, Universitas Siliwangi, Aplikasi Zakat Laravel, Aplikasi Zakat">
-    <meta name="author" content="SYAUQIZAIDAN KHAIRAN KHALAF">
+        content="Website ini bertujuan untuk pengelolaan zakat beserta pembuatan laporannya di daerah Kabupaten Cirebon">
+    <meta name="keywords" content="Universitas Muhammadiyah Cirebon, Aplikasi Distribusi Zakat Laravel, Aplikasi Zakat">
+    <meta name="author" content="Baznas Kabupaten Cirebon">
     <link rel="icon" href="{{ url('cuba/assets/images/favicon.ico') }}" type="image/x-icon">
     <link rel="shortcut icon" href="{{ url('cuba/assets/images/icon-192.png') }}" type="image/x-icon">
-    <title>Masuk Aplikasi - Zaqat</title>
+    <title>Login - Distribusi Zakat | BAZNAS KAB CIREBON</title>
     @include('includes.backend.style')
 </head>
 
@@ -19,21 +19,31 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xl-7">
-                <img class="bg-img-cover bg-center" src="{{ url('cuba/assets/images/login/login-2.jpeg') }}"
+                <img class="bg-img-cover bg-center" src="{{ url('cuba/assets/images/login/bg_1.jpg') }}"
                     alt="looginpage">
             </div>
+
             <div class="col-xl-5 p-0">
                 <div class="login-card">
                     <div class="login-main col-10 col-md-10">
+
+                        <!-- LOGO DI TENGAH ATAS -->
+                        <div class="text-center mb-3">
+                            <img src="{{ url('cuba/assets/images/logo/logo.jpeg') }}" 
+                                 alt="Logo" 
+                                 style="width:90px; height:auto; margin-bottom:10px;">
+                        </div>
+                        <!-- END LOGO -->
+
                         <form class="theme-form" method="POST" action="{{ route('login') }}">
                             @csrf
-                            <h1>🕌</h1>
-                            <h4>Masuk menggunakan akun pengurus DKM</h4>
-                            <p class="mb-2">Masukkan email & password anda untuk login</p>
+
+                            <h4 class="text-center">Login Baznas</h4>
+                            <p class="mb-2 text-center">Masukkan email & password anda untuk login</p>
 
                             @if ($errors->any())
                                 <div class="alert alert-danger py-1 mb-1">
-                                    <ul>
+                                    <ul class="mb-0">
                                         @foreach ($errors->all() as $error)
                                             <li>{{ $error }}</li>
                                         @endforeach
@@ -55,8 +65,8 @@
                                         </svg>
                                     </span>
                                 </div>
-                                <input class="form-control" type="email" name="email" placeholder="contoh@gmail.com"
-                                    autofocus required>
+                                <input class="form-control" type="email" name="email"
+                                    placeholder="contoh@gmail.com" autofocus required>
                             </div>
 
                             <label class="col-form-label">Password</label>
@@ -75,8 +85,8 @@
                                         </svg>
                                     </span>
                                 </div>
-                                <input class="form-control" type="password" name="password" required
-                                    placeholder="*********">
+                                <input class="form-control" type="password" name="password"
+                                    placeholder="*********" required>
                             </div>
 
                             <div class="form-group mb-0">
@@ -84,9 +94,13 @@
                                     <input id="checkbox1" type="checkbox" name="remember">
                                     <label class="text-muted" for="checkbox1">Ingat Password</label>
                                 </div>
-                                <button class="btn btn-primary btn-block" type="submit">Masuk Sekarang ⇾ </button>
+                                <button class="btn btn-primary btn-block" type="submit">
+                                    Masuk Sekarang ⇾
+                                </button>
                             </div>
+
                         </form>
+
                     </div>
 
                 </div>
@@ -95,5 +109,6 @@
         @include('includes.backend.script')
     </div>
 </body>
+
 
 </html>

@@ -40,7 +40,7 @@
                             <div class="post__body">
                                 <div class="post__meta d-flex align-items-center">
                                     <div class="post__cat">
-                                        <a href="#">Kabar DKM Terkini</a>
+                                        <a href="#">Berita Terkini</a>
                                     </div><!-- /.post-meta-cat -->
                                     <span class="post__date">{{ $item->tanggal }}</span>
                                     <span class="post__author">By: <a href="#">{{ $item->author }}</a></span>
@@ -54,14 +54,28 @@
                             </div><!-- /.entry-content -->
                         </div><!-- /.post-item -->
                         <div class="blog-share d-flex flex-wrap align-items-center justify-content-between mb-30">
-                            <strong class="mr-20 color-heading">Share This Article</strong>
-                            <ul class="list-unstyled social-icons d-flex mb-0">
-                                <li><a href="{{ route('article.show', $item->id) }}"><i class="fab fa-facebook-f"></i></a>
-                                </li>
-                                <li><a href="{{ route('article.show', $item->id) }}"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="{{ route('article.show', $item->id) }}"><i class="fab fa-google"></i></a></li>
-                            </ul>
-                        </div><!-- /.blog-share -->
+                        <strong class="mr-20 color-heading">Share This Article</strong>
+
+                        <ul class="list-unstyled social-icons d-flex mb-0">
+
+                            <!-- FACEBOOK -->
+                            <li class="mr-2">
+                                <a target="_blank"
+                                href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </li>
+
+                            <!-- WHATSAPP -->
+                            <li>
+                                <a target="_blank"
+                                href="https://wa.me/?text={{ urlencode($item->judul . ' - ' . url()->current()) }}">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
                     </div><!-- /.col-lg-8 -->
                 </div><!-- /.row -->
             </div><!-- /.container -->

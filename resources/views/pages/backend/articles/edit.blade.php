@@ -1,6 +1,6 @@
 @extends('layouts.backend.master')
 
-@section('title','Edit Artikel — Ciradyka Pramuka SMAN 1 Ciamis')
+@section('title','Edit Artikel — Baznas Kabupaten Cirebon')
 @section('content')
 
 @push('dropzone-and-select-styles')
@@ -21,7 +21,7 @@
                     <p>
                         Dihalaman ini anda dapat mengedit atau merubah artikel yang telah anda tambahkan sebelumnya.
                         Pastikan semua data telah terisi dan isi dengan data yang valid. Jika terjadi error atau
-                        bug anda dapat menghubungi developer [syauqi].
+                        bug anda dapat menghubungi developer [Rayhan Biruni].
                     </p>
                 </div>
             </div>

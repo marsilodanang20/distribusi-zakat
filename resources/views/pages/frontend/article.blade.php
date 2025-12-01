@@ -47,7 +47,7 @@
                                 <div class="post__body">
                                     <div class="post__meta d-flex align-items-center">
                                         <div class="post__cat">
-                                            <a href="#">Kabar DKM Terkini</a>
+                                            <a href="#">Berita Terkini</a>
                                         </div><!-- /.post-meta-cat -->
                                         <a class="post__author" href="#">Administrator</a>
                                     </div><!-- /.post-meta -->
