@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DistribusiZakat;
 use App\Models\JumlahZakat;
 use App\Models\Mustahik;
+use App\Models\Muzakki;
 use Illuminate\Http\Request;
 
 class DistribusiZakatController extends Controller
@@ -33,10 +34,9 @@ class DistribusiZakatController extends Controller
 
     public function create()
     {
+        $muzakkis = Muzakki::all();
 
-        $items = Mustahik::all();
-
-        return view('pages.backend.distribusi_zakat.create', compact('items'));
+        return view('pages.backend.distribusi_zakat.create', compact('muzakkis'));
     }
 
     /**

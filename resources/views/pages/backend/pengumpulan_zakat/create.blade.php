@@ -64,10 +64,12 @@
                                 <div class="form-group col-12 mb-2">
                                     <label for="nama_matkul">Nama Lengkap Muzakki <span class="text-danger">*</span></label>
                                     <div class="">
-                                        <select class="js-example-basic-single" name="nama_muzakki">
-                                            <option></option>
-                                            @foreach ($items as $item)
-                                                <option value="{{ $item->nama_muzakki }}">{{ $item->nama_muzakki }}</option>
+                                        <select class="form-control select2" name="nama_muzakki" required>
+                                            <option value="">Pilih Muzakki (Nama & NIK)</option>
+                                            @foreach ($muzakkis as $muzakki)
+                                                <option value="{{ $muzakki->id }}">
+                                                    {{ $muzakki->nama_muzakki }} - {{ $muzakki->nik ?? $muzakki->nomor_kk ?? '-' }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -96,7 +98,7 @@
                                 <div class="form-group col-md-4 mb-2">
                                     <label for="gender">Jenis Bayar <span class="text-danger">*</span></label>
                                     <div class="input-group mb-3">
-                                        <select class="custom-select" id="inputGroupSelect01" name="jenis_bayar">
+                                        <select class="custom-select" id="jenis_bayar" name="jenis_bayar">
                                             <option value="" disabled selected>Pilih ...</option>
                                             <option value="Beras">Beras</option>
                                             <option value="Uang">Uang</option>
@@ -113,18 +115,24 @@
                                 </div>
 
                                 <div class="form-group col-md-6 mb-2">
-                                    <label for="sks">Bayar Beras <span class="text-danger">*</span></label>
-                                    <div class="input-group mb-3">
-                                        <input id="bayar_beras" type="number" value="{{ old('bayar_beras') }}"
-                                            class="form-control" name="bayar_beras">
+                                    <label for="bayar_beras">Bayar Beras <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input id="bayar_beras" type="number" step="0.01" value="{{ old('bayar_beras') }}"
+                                            class="form-control" name="bayar_beras" placeholder="Masukkan jumlah beras" disabled>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Kilogram</span>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group col-md-6 mb-2">
-                                    <label for="sks">Bayar Uang <span class="text-danger">*</span></label>
-                                    <div class="input-group mb-3">
-                                        <input id="bayar_uang" type="number" value="{{ old('bayar_uang') }}"
-                                            class="form-control" name="bayar_uang">
+                                    <label for="bayar_uang">Bayar Uang <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input id="bayar_uang" type="text" value="{{ old('bayar_uang') }}"
+                                            class="form-control" name="bayar_uang" placeholder="Masukkan nominal" disabled>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Rp</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -149,11 +157,58 @@
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script>
             $(document).ready(function() {
-                $('.js-example-basic-single').select2({
-                    theme: "classic",
-                    width: 'resolve', // need to override the changed default
-                    placeholder: "Pilih Muzakki yang Terdaftar",
+                $('.select2').select2({
+                    placeholder: "Pilih Muzakki (Nama & NIK)",
+                    allowClear: true
                 });
+
+                // Logic for Type of Payment
+                const jenisBayar = document.getElementById('jenis_bayar');
+                const bayarBeras = document.getElementById('bayar_beras');
+                const bayarUang = document.getElementById('bayar_uang');
+                const form = document.querySelector('form');
+
+                function toggleBayar() {
+                    if (jenisBayar.value === 'Beras') {
+                        bayarBeras.disabled = false;
+                        bayarUang.disabled = true;
+                        bayarUang.value = '';
+                    } else if (jenisBayar.value === 'Uang') {
+                        bayarUang.disabled = false;
+                        bayarBeras.disabled = true;
+                        bayarBeras.value = '';
+                    } else {
+                        bayarBeras.disabled = true;
+                        bayarUang.disabled = true;
+                    }
+                }
+
+                if (jenisBayar) {
+                    jenisBayar.addEventListener('change', toggleBayar);
+                    // Initial check
+                    toggleBayar();
+                }
+
+                // Rupiah Formatter
+                if (bayarUang) {
+                    bayarUang.addEventListener('input', function(e) {
+                        let value = this.value.replace(/[^0-9]/g, '');
+                        if (value) {
+                            this.value = new Intl.NumberFormat('id-ID').format(value);
+                        } else {
+                            this.value = '';
+                        }
+                    });
+                }
+
+                // Strip non-numeric characters from 'bayar_uang' on submit
+                if (form) {
+                    form.addEventListener('submit', function() {
+                        if (bayarUang && !bayarUang.disabled) {
+                            bayarUang.value = bayarUang.value.replace(/\./g, '');
+                        }
+                    });
+                }
             });
         </script>
     @endpush

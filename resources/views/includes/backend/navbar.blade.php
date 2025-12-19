@@ -120,7 +120,7 @@ body.dark-only .btn-zakat svg,
                 <li class="profile-nav onhover-dropdown p-0 ml-2 mr-0">
                     <div class="media profile-media">
                         <img class="b-r-10"
-                             src="https://ui-avatars.com/api/?name={{ Auth::user()->name }}&background=5a983f&color=fff"
+                             src="https://ui-avatars.com/api/?name={{ Auth::user()->name }}&background=556B2F&color=fff"
                              width="40px">
                         <div class="media-body">
                             <span>{{ Auth::user()->name }}</span>

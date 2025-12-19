@@ -59,7 +59,7 @@
                                                         width: 40px;
                                                         height: 40px;"
                                                                     class="b-r-8"
-                                                                    src="https://ui-avatars.com/api/?background=5a983f&color=fff&name={{ $item->nama_mustahik }}">
+                                                                    src="https://ui-avatars.com/api/?background=556B2F&color=fff&name={{ $item->nama_mustahik }}">
                                                             </div>
                                                         </div>
                                                         <div class="flex-fill">

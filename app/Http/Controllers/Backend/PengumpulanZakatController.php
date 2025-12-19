@@ -33,10 +33,9 @@ class PengumpulanZakatController extends Controller
 
     public function create()
     {
+        $muzakkis = Muzakki::all();
 
-        $items = Muzakki::all();
-
-        return view('pages.backend.pengumpulan_zakat.create', compact('items'));
+        return view('pages.backend.pengumpulan_zakat.create', compact('muzakkis'));
     }
 
     /**

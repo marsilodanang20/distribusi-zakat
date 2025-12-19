@@ -1,6 +1,6 @@
 @extends('layouts.backend.master')
 
-@section('title', 'Laporan Pengumpulan Zakat — Baznas Kabupaten Cirebon')
+@section('title', 'Laporan Pengumpulan Zakat Periode 2025 — Baznas Kabupaten Cirebon')
 @section('content')
 
     @push('datatable-styles')

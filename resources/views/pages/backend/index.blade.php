@@ -1,6 +1,6 @@
 @extends('layouts.backend.master')
 
-@section('title', 'Selamat datang di Dashboard Distribusi Zakat | Baznas Kabupaten Cirebon ' . Auth::user()->name . '!')
+@section('title', 'Dashboard Distribusi Zakat | Baznas Kabupaten Cirebon ' . Auth::user()->name . '!')
 @section('content')
 
     @push('datatable-styles')
@@ -56,7 +56,7 @@
                                                         width: 40px;
                                                         height: 40px;"
                                                                 class="b-r-8"
-                                                                src="https://ui-avatars.com/api/?background=5a983f&color=fff&name={{ $item->nama_muzakki }}">
+                                                                src="https://ui-avatars.com/api/?background=556B2F&color=fff&name={{ $item->nama_muzakki }}">
                                                         </div>
                                                     </div>
                                                     <div class="flex-fill">

@@ -64,10 +64,11 @@
                                 <div class="form-group col-12 mb-2">
                                     <label for="nama_matkul">Nama Lengkap Muzakki <span class="text-danger">*</span></label>
                                     <div class="">
-                                        <select class="js-example-basic-single" name="nama_mustahik">
-                                            <option></option>
-                                            @foreach ($items as $item)
-                                                <option value="{{ $item->nama_mustahik }}">{{ $item->nama_mustahik }}
+                                        <select class="form-control select2" name="nama_mustahik" required>
+                                            <option value="">Pilih Muzakki (Nama & NIK)</option>
+                                            @foreach ($muzakkis as $muzakki)
+                                                <option value="{{ $muzakki->id }}">
+                                                    {{ $muzakki->nama_muzakki }} - {{ $muzakki->nik ?? $muzakki->nomor_kk ?? '-' }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -75,17 +76,10 @@
                                 </div>
                             </div>
                             <div class="form-row mt-4">
-                                <div class="form-group col-md-12">
-                                    <div class="alert alert-primary py-2" role="alert">
-                                        Isi salah satu dari 2 form dibawah ini, jika memilih beras sebelumnya maka isi
-                                        dengan
-                                        satuan KG dan jika uang maka isi dengan nominal angka tanpa RP
-                                    </div>
-                                </div>
                                 <div class="form-group col-md-4 mb-2">
                                     <label for="gender">Jenis Zakat <span class="text-danger">*</span></label>
                                     <div class="input-group mb-3">
-                                        <select class="custom-select" id="inputGroupSelect01" name="jenis_zakat">
+                                        <select class="custom-select" id="jenis_zakat" name="jenis_zakat">
                                             <option value="" disabled selected>Pilih ...</option>
                                             <option value="Beras">Beras</option>
                                             <option value="Uang">Uang</option>
@@ -93,19 +87,33 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group col-md-4 mb-2">
-                                    <label for="sks">Jumlah Beras <span class="text-danger">*</span></label>
-                                    <div class="input-group mb-3">
-                                        <input id="bayar_beras" type="number" value="{{ old('bayar_beras') }}"
-                                            class="form-control" name="jumlah_beras">
+                                <div class="form-group col-md-12">
+                                    <div class="alert alert-primary py-2" role="alert">
+                                        Isi salah satu dari 2 form dibawah ini, jika memilih beras sebelumnya maka isi
+                                        dengan
+                                        satuan KG dan jika uang maka isi dengan nominal angka tanpa RP
                                     </div>
                                 </div>
 
-                                <div class="form-group col-md-4 mb-2">
-                                    <label for="sks">Jumlah Uang <span class="text-danger">*</span></label>
-                                    <div class="input-group mb-3">
-                                        <input id="bayar_uang" type="number" value="{{ old('bayar_uang') }}"
-                                            class="form-control" name="jumlah_uang">
+                                <div class="form-group col-md-6 mb-2">
+                                    <label for="beras">Distribusi Beras <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input id="beras" type="number" step="0.01" value="{{ old('jumlah_beras') }}"
+                                            class="form-control" name="jumlah_beras" placeholder="Masukkan jumlah beras" disabled>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Kilogram</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6 mb-2">
+                                    <label for="uang">Distribusi Uang <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input id="uang" type="text" value="{{ old('jumlah_uang') }}"
+                                            class="form-control" name="jumlah_uang" placeholder="Masukkan nominal" disabled>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Rp</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -130,11 +138,58 @@
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script>
             $(document).ready(function() {
-                $('.js-example-basic-single').select2({
-                    theme: "classic",
-                    width: 'resolve', // need to override the changed default
-                    placeholder: "Pilih Muzakki yang Terdaftar",
+                $('.select2').select2({
+                    placeholder: "Pilih Muzakki (Nama & NIK)",
+                    allowClear: true
                 });
+
+                // Logic for Type of Distribution
+                const jenis = document.getElementById('jenis_zakat');
+                const beras = document.getElementById('beras');
+                const uang = document.getElementById('uang');
+                const form = document.querySelector('form');
+
+                function toggleDistribusi() {
+                    if (jenis.value === 'Beras') {
+                        beras.disabled = false;
+                        uang.disabled = true;
+                        uang.value = '';
+                    } else if (jenis.value === 'Uang') {
+                        uang.disabled = false;
+                        beras.disabled = true;
+                        beras.value = '';
+                    } else {
+                        beras.disabled = true;
+                        uang.disabled = true;
+                    }
+                }
+
+                if (jenis) {
+                    jenis.addEventListener('change', toggleDistribusi);
+                    // Initial check
+                    toggleDistribusi();
+                }
+
+                // Rupiah Formatter
+                if (uang) {
+                    uang.addEventListener('input', function(e) {
+                        let value = this.value.replace(/[^0-9]/g, '');
+                        if (value) {
+                            this.value = new Intl.NumberFormat('id-ID').format(value);
+                        } else {
+                            this.value = '';
+                        }
+                    });
+                }
+
+                // Strip non-numeric characters from 'uang' on submit
+                if (form) {
+                    form.addEventListener('submit', function() {
+                        if (uang && !uang.disabled) {
+                            uang.value = uang.value.replace(/\./g, '');
+                        }
+                    });
+                }
             });
         </script>
     @endpush
