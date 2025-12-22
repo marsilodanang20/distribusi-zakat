@@ -2,7 +2,7 @@
 
 Aplikasi berbasis web untuk pengelolaan zakat, infaq, dan shodaqoh yang mencakup pengumpulan dari Muzakki hingga distribusi ke Mustahik, dilengkapi dengan pelaporan dan CMS sederhana.
 
-![Dashboard Preview](https://via.placeholder.com/800x400?text=Dashboard+Preview)
+![Preview](https://github.com/marsilodanang20/distribusi-zakat/blob/main/public/images/splide/preview.png)
 
 ## 🚀 Fitur Utama
 
