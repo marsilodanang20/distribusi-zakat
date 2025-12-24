@@ -21,7 +21,7 @@ class LaporanDistribusiController extends Controller
         $totalUang = $jumlahZakat->jumlah_uang;
         $totalDistribusi = $jumlahZakat->total_distribusi;
 
-        $items = DistribusiZakat::all();
+        $items = DistribusiZakat::with('mustahik')->get();
 
         return view('pages.backend.laporan_distribusi.index', [
             'items' => $items,

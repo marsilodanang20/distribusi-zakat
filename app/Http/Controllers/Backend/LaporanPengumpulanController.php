@@ -20,7 +20,7 @@ class LaporanPengumpulanController extends Controller
         $totalBeras = $jumlahZakat->total_beras;
         $totalUang = $jumlahZakat->total_uang;
 
-        $items = PengumpulanZakat::all();
+        $items = PengumpulanZakat::with('muzakki')->get();
 
         return view('pages.backend.laporan_pengumpulan.index', [
             'items' => $items,

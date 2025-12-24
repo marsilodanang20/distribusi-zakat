@@ -93,29 +93,26 @@
                                     <tbody>
                                         @forelse ($items as $item)
                                             <tr>
-
-                                                <td>
-                                                    <div class="d-flex py-1 align-items-center">
-                                                        <div class="avatars mr-2">
-                                                            <div class="avatar ratio"><img
-                                                                    style="object-fit: cover;
-                                                        width: 40px;
-                                                        height: 40px;"
-                                                                    class="b-r-8"
-                                                                    src="https://ui-avatars.com/api/?background=5a983f&color=fff&name={{ $item->nama_mustahik }}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex-fill">
-                                                            <div class="font-weight-bold">{{ $item->nama_mustahik }}</div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>{{ $item->jenis_zakat }}</td>
-                                                <td>{{ $item->jumlah_beras ?? '-' }}
-                                                </td>
-                                                <td>{{ $item->jumlah_uang ?? '-' }}
-                                                </td>
-                                            </tr>
+                                                 <td>
+                                                     <div class="d-flex py-1 align-items-center">
+                                                         <div class="avatars mr-2">
+                                                             <div class="avatar ratio"><img
+                                                                     style="object-fit: cover;
+                                                         width: 40px;
+                                                         height: 40px;"
+                                                                     class="b-r-8"
+                                                                     src="https://ui-avatars.com/api/?background=5a983f&color=fff&name={{ $item->mustahik->nama_mustahik ?? '-' }}">
+                                                             </div>
+                                                         </div>
+                                                         <div class="flex-fill">
+                                                             <div class="font-weight-bold">{{ $item->mustahik->nama_mustahik ?? 'Data Terhapus' }}</div>
+                                                         </div>
+                                                     </div>
+                                                 </td>
+                                                 <td>{{ $item->jenis_zakat }}</td>
+                                                 <td>{{ $item->distribusi_beras > 0 ? $item->distribusi_beras . ' Kg' : '-' }}</td>
+                                                 <td>{{ $item->distribusi_uang > 0 ? 'Rp ' . number_format($item->distribusi_uang, 0, ',', '.') : '-' }}</td>
+                                             </tr>
                                         @empty
                                         @endforelse
                                     </tbody>

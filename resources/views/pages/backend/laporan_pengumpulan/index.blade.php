@@ -92,30 +92,30 @@
                                     <tbody>
                                         @forelse ($items as $item)
                                             <tr>
-                                                <td>
-                                                    <div class="d-flex py-1 align-items-center">
-                                                        <div class="avatars mr-2">
-                                                            <div class="avatar ratio"><img
-                                                                    style="object-fit: cover;
-                                            width: 40px;
-                                            height: 40px;"
-                                                                    class="b-r-8"
-                                                                    src="https://ui-avatars.com/api/?background=5a983f&color=fff&name={{ $item->nama_muzakki }}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex-fill">
-                                                            <div class="font-weight-bold">{{ $item->nama_muzakki }}</div>
-                                                            <div class="text-muted">Tanggungan: &nbsp;<a href="#"
-                                                                    class="text-reset">{{ $item->jumlah_tanggungan }}</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>{{ $item->jenis_bayar }}</td>
-                                                <td>{{ $item->jumlah_tanggungandibayar }}</td>
-                                                <td>{{ $item->bayar_beras ?? '-' }}</td>
-                                                <td>{{ $item->bayar_uang ?? '-' }}</td>
-                                            </tr>
+                                                 <td>
+                                                     <div class="d-flex py-1 align-items-center">
+                                                         <div class="avatars mr-2">
+                                                             <div class="avatar ratio"><img
+                                                                     style="object-fit: cover;
+                                             width: 40px;
+                                             height: 40px;"
+                                                                     class="b-r-8"
+                                                                     src="https://ui-avatars.com/api/?background=5a983f&color=fff&name={{ $item->muzakki->nama_muzakki ?? '-' }}">
+                                                             </div>
+                                                         </div>
+                                                         <div class="flex-fill">
+                                                             <div class="font-weight-bold">{{ $item->muzakki->nama_muzakki ?? 'Data Terhapus' }}</div>
+                                                             <div class="text-muted">Tanggungan: &nbsp;<a href="#"
+                                                                     class="text-reset">{{ $item->jumlah_tanggungan }}</a>
+                                                             </div>
+                                                         </div>
+                                                     </div>
+                                                 </td>
+                                                 <td>{{ $item->jenis_bayar }}</td>
+                                                 <td>{{ $item->jumlah_tanggungandibayar }}</td>
+                                                 <td>{{ $item->bayar_beras ? $item->bayar_beras . ' Kg' : '-' }}</td>
+                                                 <td>{{ $item->bayar_uang ? 'Rp ' . number_format($item->bayar_uang, 0, ',', '.') : '-' }}</td>
+                                             </tr>
                                         @empty
                                         @endforelse
                                     </tbody>

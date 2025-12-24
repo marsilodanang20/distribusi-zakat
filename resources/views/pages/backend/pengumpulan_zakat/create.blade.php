@@ -62,13 +62,15 @@
                             @endif
                             <div class="form-row">
                                 <div class="form-group col-12 mb-2">
-                                    <label for="nama_matkul">Nama Lengkap Muzakki <span class="text-danger">*</span></label>
+                                    <label for="muzakki_select">Nama Lengkap Muzakki <span class="text-danger">*</span></label>
                                     <div class="">
-                                        <select class="form-control select2" name="nama_muzakki" required>
-                                            <option value="">Pilih Muzakki (Nama & NIK)</option>
+                                        <select class="form-control select2" id="muzakki_select" name="muzakki_id" required>
+                                            <option value="">Pilih Muzakki (NIK - Nama)</option>
                                             @foreach ($muzakkis as $muzakki)
-                                                <option value="{{ $muzakki->id }}">
-                                                    {{ $muzakki->nama_muzakki }} - {{ $muzakki->nik ?? $muzakki->nomor_kk ?? '-' }}
+                                                <option value="{{ $muzakki->id }}" 
+                                                        data-tanggungan="{{ $muzakki->jumlah_tanggungan }}"
+                                                        {{ old('muzakki_id') == $muzakki->id ? 'selected' : '' }}>
+                                                    {{ $muzakki->nik ?? $muzakki->nomor_kk ?? '-' }} - {{ $muzakki->nama_muzakki }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -77,12 +79,16 @@
                             </div>
                             <div class="form-row mt-4">
                                 <div class="form-group col-md-4 mb-2">
-                                    <label for="angkatan">Jumlah Tanggungan <span class="text-danger">*</span></label>
+                                    <label for="jumlah_tanggungan">Jumlah Tanggungan <span class="text-danger">*</span></label>
                                     <div class="input-group mb-3">
                                         <input required id="jumlah_tanggungan" type="text"
                                             value="{{ old('jumlah_tanggungan') }}" class="form-control"
-                                            name="jumlah_tanggungan">
+                                            name="jumlah_tanggungan" 
+                                            placeholder="Pilih muzakki terlebih dahulu"
+                                            style="background-color: #f5f5f5;"
+                                            onfocus="this.blur();">
                                     </div>
+                                    <small class="text-muted">⚠️ Field ini terisi otomatis saat Anda memilih muzakki</small>
                                 </div>
 
                                 <div class="form-group col-md-4 mb-2">
@@ -157,58 +163,97 @@
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script>
             $(document).ready(function() {
-                $('.select2').select2({
-                    placeholder: "Pilih Muzakki (Nama & NIK)",
+                // ✅ INISIALISASI SELECT2
+                $('#muzakki_select').select2({
+                    placeholder: "Pilih Muzakki (NIK - Nama)",
                     allowClear: true
                 });
 
-                // Logic for Type of Payment
-                const jenisBayar = document.getElementById('jenis_bayar');
-                const bayarBeras = document.getElementById('bayar_beras');
-                const bayarUang = document.getElementById('bayar_uang');
-                const form = document.querySelector('form');
+                // ✅ AUTO-FILL JUMLAH TANGGUNGAN SAAT MUZAKKI DIPILIH (PAKAI SELECT2 EVENT)
+                $('#muzakki_select').on('select2:select', function(e) {
+                    const selectedOption = e.params.data.element;
+                    const tanggungan = $(selectedOption).data('tanggungan');
+                    
+                    console.log('Muzakki dipilih, jumlah tanggungan:', tanggungan); // Debug
+                    
+                    if (tanggungan && tanggungan !== 'null' && tanggungan !== '') {
+                        $('#jumlah_tanggungan').val(tanggungan);
+                    } else {
+                        $('#jumlah_tanggungan').val('');
+                    }
+                });
+
+                // ✅ CLEAR JUMLAH TANGGUNGAN SAAT SELECT2 DI-CLEAR
+                $('#muzakki_select').on('select2:clear', function(e) {
+                    $('#jumlah_tanggungan').val('');
+                    console.log('Muzakki di-clear, jumlah tanggungan dikosongkan'); // Debug
+                });
+
+                // ✅ TRIGGER UNTUK OLD VALUE (JIKA ADA ERROR VALIDASI)
+                @if(old('muzakki_id'))
+                    const oldMuzakkiId = '{{ old("muzakki_id") }}';
+                    if (oldMuzakkiId) {
+                        const selectedOption = $('#muzakki_select option:selected');
+                        const tanggungan = selectedOption.data('tanggungan');
+                        if (tanggungan && tanggungan !== 'null' && tanggungan !== '') {
+                            $('#jumlah_tanggungan').val(tanggungan);
+                            console.log('Old value restored, jumlah tanggungan:', tanggungan); // Debug
+                        }
+                    }
+                @endif
+
+                // ✅ LOGIC FOR TYPE OF PAYMENT
+                const jenisBayar = $('#jenis_bayar');
+                const bayarBeras = $('#bayar_beras');
+                const bayarUang = $('#bayar_uang');
+                const form = $('form');
 
                 function toggleBayar() {
-                    if (jenisBayar.value === 'Beras') {
-                        bayarBeras.disabled = false;
-                        bayarUang.disabled = true;
-                        bayarUang.value = '';
-                    } else if (jenisBayar.value === 'Uang') {
-                        bayarUang.disabled = false;
-                        bayarBeras.disabled = true;
-                        bayarBeras.value = '';
+                    if (jenisBayar.val() === 'Beras') {
+                        bayarBeras.prop('disabled', false);
+                        bayarUang.prop('disabled', true);
+                        bayarUang.val('');
+                    } else if (jenisBayar.val() === 'Uang') {
+                        bayarUang.prop('disabled', false);
+                        bayarBeras.prop('disabled', true);
+                        bayarBeras.val('');
                     } else {
-                        bayarBeras.disabled = true;
-                        bayarUang.disabled = true;
+                        bayarBeras.prop('disabled', true);
+                        bayarUang.prop('disabled', true);
                     }
                 }
 
-                if (jenisBayar) {
-                    jenisBayar.addEventListener('change', toggleBayar);
-                    // Initial check
-                    toggleBayar();
-                }
+                jenisBayar.on('change', toggleBayar);
+                // Initial check
+                toggleBayar();
 
-                // Rupiah Formatter
-                if (bayarUang) {
-                    bayarUang.addEventListener('input', function(e) {
-                        let value = this.value.replace(/[^0-9]/g, '');
-                        if (value) {
-                            this.value = new Intl.NumberFormat('id-ID').format(value);
-                        } else {
-                            this.value = '';
-                        }
-                    });
-                }
+                // ✅ RUPIAH FORMATTER
+                bayarUang.on('input', function(e) {
+                    let value = this.value.replace(/[^0-9]/g, '');
+                    if (value) {
+                        this.value = new Intl.NumberFormat('id-ID').format(value);
+                    } else {
+                        this.value = '';
+                    }
+                });
 
-                // Strip non-numeric characters from 'bayar_uang' on submit
-                if (form) {
-                    form.addEventListener('submit', function() {
-                        if (bayarUang && !bayarUang.disabled) {
-                            bayarUang.value = bayarUang.value.replace(/\./g, '');
-                        }
-                    });
-                }
+                // ✅ STRIP NON-NUMERIC CHARACTERS FROM 'bayar_uang' ON SUBMIT
+                form.on('submit', function() {
+                    if (bayarUang.prop('disabled') === false) {
+                        const cleanValue = bayarUang.val().replace(/\./g, '');
+                        bayarUang.val(cleanValue);
+                    }
+                    
+                    // ✅ DEBUG: LOG SEMUA DATA SEBELUM SUBMIT
+                    console.log('=== DATA YANG AKAN DI-SUBMIT ===');
+                    console.log('Muzakki ID:', $('#muzakki_select').val());
+                    console.log('Jumlah Tanggungan:', $('#jumlah_tanggungan').val());
+                    console.log('Jumlah Dibayar:', $('#jumlah_tanggungandibayar').val());
+                    console.log('Jenis Bayar:', jenisBayar.val());
+                    console.log('Bayar Beras:', bayarBeras.val());
+                    console.log('Bayar Uang:', bayarUang.val());
+                    console.log('================================');
+                });
             });
         </script>
     @endpush

@@ -14,9 +14,8 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-
     {
-        $items = PengumpulanZakat::all();
+        $items = PengumpulanZakat::with('muzakki')->latest()->take(5)->get();
 
         return view('pages.backend.index', [
             'items' => $items

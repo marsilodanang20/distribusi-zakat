@@ -39,9 +39,11 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Nama Muzzaki</th>
+                                            <th>NIK</th>
+                                            <th>Nama Muzakki</th>
+                                            <th>Jml Tanggungan</th>
+                                            <th>Jml Dibayar</th>
                                             <th>Jenis Bayar</th>
-                                            <th>Jml Tanggungan Dibayar</th>
                                             <th>Bayar Beras</th>
                                             <th>Bayar Uang</th>
                                             <th>Opsi</th>
@@ -52,28 +54,55 @@
                                             <tr>
                                                 <td>{{ $item->id }}</td>
                                                 <td>
+                                                    @if($item->muzakki)
+                                                        {{ $item->muzakki->nik ?? $item->muzakki->nomor_kk ?? '-' }}
+                                                    @else
+                                                        <span class="text-danger">Data muzakki tidak ditemukan</span>
+                                                    @endif
+                                                </td>
+                                                <td>
                                                     <div class="d-flex py-1 align-items-center">
-                                                        <div class="avatars mr-2">
-                                                            <div class="avatar ratio"><img
-                                                                    style="object-fit: cover;
-                                                        width: 40px;
-                                                        height: 40px;"
-                                                                    class="b-r-8"
-                                                                    src="https://ui-avatars.com/api/?background=556B2F&color=fff&name={{ $item->nama_muzakki }}">
+                                                        @if($item->muzakki)
+                                                            <div class="avatars mr-2">
+                                                                <div class="avatar ratio"><img
+                                                                        style="object-fit: cover;
+                                                            width: 40px;
+                                                            height: 40px;"
+                                                                        class="b-r-8"
+                                                                        src="https://ui-avatars.com/api/?background=556B2F&color=fff&name={{ $item->muzakki->nama_muzakki }}">
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="flex-fill">
-                                                            <div class="font-weight-bold">{{ $item->nama_muzakki }}</div>
-                                                            <div class="text-muted">Tanggungan: &nbsp;<a href="#"
-                                                                    class="text-reset">{{ $item->jumlah_tanggungan }}</a>
+                                                            <div class="flex-fill">
+                                                                <div class="font-weight-bold">{{ $item->muzakki->nama_muzakki }}</div>
                                                             </div>
-                                                        </div>
+                                                        @else
+                                                            <span class="text-danger">-</span>
+                                                        @endif
                                                     </div>
                                                 </td>
-                                                <td>{{ $item->jenis_bayar }}</td>
+                                                <td>{{ $item->jumlah_tanggungan }}</td>
                                                 <td>{{ $item->jumlah_tanggungandibayar }}</td>
-                                                <td>{{ $item->bayar_beras ?? '-' }}</td>
-                                                <td>{{ $item->bayar_uang ?? '-' }}</td>
+                                                <td>
+                                                    @if($item->jenis_bayar === 'Beras')
+                                                        <span class="badge badge-success">{{ $item->jenis_bayar }}</span>
+                                                    @else
+                                                        <span class="badge badge-primary">{{ $item->jenis_bayar }}</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($item->bayar_beras && $item->bayar_beras > 0)
+                                                        {{ number_format($item->bayar_beras, 2, ',', '.') }} Kg
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($item->bayar_uang && $item->bayar_uang > 0)
+                                                        Rp {{ number_format($item->bayar_uang, 0, ',', '.') }}
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     <a href="{{ route('pengumpulan_zakat.edit', $item->id) }}"
                                                         class="btn btn-info px-2">
@@ -96,7 +125,8 @@
                                                         method="POST" class="d-inline">
                                                         @csrf
                                                         @method('delete')
-                                                        <button class="btn btn-danger px-2">
+                                                        <button class="btn btn-danger px-2" 
+                                                                onclick="return confirm('Yakin ingin menghapus data ini?')">
                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                 class="icon icon-tabler icon-tabler-trash" width="16"
                                                                 height="16" viewBox="0 0 24 24" stroke-width="2"
@@ -119,14 +149,23 @@
                                                 </td>
                                             </tr>
                                         @empty
+                                            <tr>
+                                                <td colspan="9" class="text-center">
+                                                    <div class="py-4">
+                                                        <p class="text-muted">Belum ada data pengumpulan zakat</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         @endforelse
                                     </tbody>
                                     <tfoot>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Nama Muzzaki</th>
+                                            <th>NIK</th>
+                                            <th>Nama Muzakki</th>
+                                            <th>Jml Tanggungan</th>
+                                            <th>Jml Dibayar</th>
                                             <th>Jenis Bayar</th>
-                                            <th>Jml Tanggungan Dibayar</th>
                                             <th>Bayar Beras</th>
                                             <th>Bayar Uang</th>
                                             <th>Opsi</th>

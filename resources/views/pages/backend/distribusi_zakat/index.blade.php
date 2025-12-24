@@ -19,7 +19,7 @@
                         <h5 class="text-white">Data Distribusi Zakat</h5>
                     </div>
                     <div class="card-body">
-                        <p>Dibawah ini adalah data Distribusi Zakat yang telah anda tambahkan. Data dibawah juga bisa anda
+                        <p>Dibawah ini adalah data distribusi zakat yang telah anda tambahkan. Data dibawah juga bisa anda
                             lihat detailnya dengan menekan logo mata berwarna hijau, edit dengan menekan logo pencil
                             berwarna ungu dan hapus dengan menekan logo sampah berwarna merah
                         </p>
@@ -39,10 +39,13 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
+                                            <th>NIK</th>
                                             <th>Nama Mustahik</th>
+                                            <th>Kategori</th>
+                                            <th>Jumlah Hak</th>
                                             <th>Jenis Zakat</th>
-                                            <th>Jumlah Beras</th>
-                                            <th>Jumlah Uang</th>
+                                            <th>Distribusi Beras</th>
+                                            <th>Distribusi Uang</th>
                                             <th>Opsi</th>
                                         </tr>
                                     </thead>
@@ -51,25 +54,66 @@
                                             <tr>
                                                 <td>{{ $item->id }}</td>
                                                 <td>
+                                                    @if($item->mustahik)
+                                                        {{ $item->mustahik->nik ?? $item->mustahik->nomor_kk ?? '-' }}
+                                                    @else
+                                                        <span class="text-danger">Data mustahik tidak ditemukan</span>
+                                                    @endif
+                                                </td>
+                                                <td>
                                                     <div class="d-flex py-1 align-items-center">
-                                                        <div class="avatars mr-2">
-                                                            <div class="avatar ratio"><img
-                                                                    style="object-fit: cover;
-                                                        width: 40px;
-                                                        height: 40px;"
-                                                                    class="b-r-8"
-                                                                    src="https://ui-avatars.com/api/?background=556B2F&color=fff&name={{ $item->nama_mustahik }}">
+                                                        @if($item->mustahik)
+                                                            <div class="avatars mr-2">
+                                                                <div class="avatar ratio"><img
+                                                                        style="object-fit: cover;
+                                                            width: 40px;
+                                                            height: 40px;"
+                                                                        class="b-r-8"
+                                                                        src="https://ui-avatars.com/api/?background=556B2F&color=fff&name={{ $item->mustahik->nama_mustahik }}">
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="flex-fill">
-                                                            <div class="font-weight-bold">{{ $item->nama_mustahik }}</div>
-                                                        </div>
+                                                            <div class="flex-fill">
+                                                                <div class="font-weight-bold">{{ $item->mustahik->nama_mustahik }}</div>
+                                                            </div>
+                                                        @else
+                                                            <span class="text-danger">-</span>
+                                                        @endif
                                                     </div>
                                                 </td>
-                                                <td>{{ $item->jenis_zakat }}</td>
-                                                <td>{{ $item->jumlah_beras ?? '-' }}
+                                                <td>
+                                                    @if($item->mustahik)
+                                                        <span class="badge badge-info">{{ $item->mustahik->kategori_mustahik }}</span>
+                                                    @else
+                                                        -
+                                                    @endif
                                                 </td>
-                                                <td>{{ $item->jumlah_uang ?? '-' }}
+                                                <td>
+                                                    @if($item->mustahik)
+                                                        {{ number_format($item->mustahik->jumlah_hak, 0, ',', '.') }}
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($item->jenis_zakat === 'Beras')
+                                                        <span class="badge badge-success">{{ $item->jenis_zakat }}</span>
+                                                    @else
+                                                        <span class="badge badge-primary">{{ $item->jenis_zakat }}</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($item->distribusi_beras && $item->distribusi_beras > 0)
+                                                        {{ number_format($item->distribusi_beras, 2, ',', '.') }} Kg
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($item->distribusi_uang && $item->distribusi_uang > 0)
+                                                        Rp {{ number_format($item->distribusi_uang, 0, ',', '.') }}
+                                                    @else
+                                                        -
+                                                    @endif
                                                 </td>
                                                 <td>
                                                     <a href="{{ route('distribusi_zakat.edit', $item->id) }}"
@@ -93,7 +137,8 @@
                                                         method="POST" class="d-inline">
                                                         @csrf
                                                         @method('delete')
-                                                        <button class="btn btn-danger px-2">
+                                                        <button class="btn btn-danger px-2" 
+                                                                onclick="return confirm('Yakin ingin menghapus data ini?')">
                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                 class="icon icon-tabler icon-tabler-trash" width="16"
                                                                 height="16" viewBox="0 0 24 24" stroke-width="2"
@@ -116,17 +161,25 @@
                                                 </td>
                                             </tr>
                                         @empty
+                                            <tr>
+                                                <td colspan="9" class="text-center">
+                                                    <div class="py-4">
+                                                        <p class="text-muted">Belum ada data distribusi zakat</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         @endforelse
                                     </tbody>
                                     <tfoot>
                                         <tr>
                                             <th>ID</th>
+                                            <th>NIK</th>
                                             <th>Nama Mustahik</th>
-
+                                            <th>Kategori</th>
+                                            <th>Jumlah Hak</th>
                                             <th>Jenis Zakat</th>
-
-                                            <th>Jumlah Beras</th>
-                                            <th>Jumlah Uang</th>
+                                            <th>Distribusi Beras</th>
+                                            <th>Distribusi Uang</th>
                                             <th>Opsi</th>
                                         </tr>
                                     </tfoot>
