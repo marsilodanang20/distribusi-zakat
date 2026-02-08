@@ -8,6 +8,16 @@
 <link rel="stylesheet" type="text/css" href="{{ url('cuba/assets/css/vendors/dropzone.css') }}">
 @endpush
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <div>
     <!-- PAGE TITLE -->
     <div class="container-fluid">
@@ -76,7 +86,7 @@
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="thumbnail"
                                                id="thumbnail" accept="image/*" required>
-                                        <label class="custom-file-label" for="thumbnail">Pilih file thumbnail</label>
+                                        <label class="custom-file-label" for="thumbnail">Pilih file thumbnail max 5MB...</label>
                                     </div>
 
                                     <!-- Preview Thumbnail -->

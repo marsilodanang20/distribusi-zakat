@@ -224,9 +224,7 @@
             </div><!-- /.container -->
         </section><!-- /.services Layout 2 -->
 
-        <!-- ======================
-                                                                                                                                                Blog Grid
-                                                                                                                                              ========================= -->
+        <!-- ====================== Blog Grid ========================= -->
         <section class="post-grid pb-60">
             <div class="container">
                 <div class="row">
@@ -234,52 +232,57 @@
                         <div class="heading text-center mb-50">
                             <h2 class="heading__subtitle">Berita Acara & Pengumuman</h2>
                             <h3 class="heading__title">Artikel Terbaru</h3>
-                        </div><!-- /.heading -->
-                    </div><!-- /.col-lg-6 -->
-                </div><!-- /.row -->
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     @forelse ($articles as $artcls)
-                        <!-- Post Item #1 -->
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <div class="post-item">
                                 <div class="post__img">
-                                    <a href="blog-single-post.html">
-                                        <img style=" width: 100%;
-                                        height: 320px;
-                                        object-fit: cover;"
-                                            src="{{ url('storage/images/' . $artcls->thumbnail) }}" alt="blog">
+                                    <a href="{{ route('article.show', $artcls->id) }}">
+                                        <img
+                                            style="width:100%; height:320px; object-fit:cover;"
+                                            src="{{ asset('storage/images/' . $artcls->thumbnail) }}"
+                                            alt="{{ $artcls->judul }}">
                                     </a>
                                     <span class="post__date">{{ $artcls->tanggal }}</span>
-                                </div><!-- /.post-img -->
+                                </div>
+
                                 <div class="post__body">
                                     <div class="post__meta d-flex align-items-center">
                                         <div class="post__cat">
                                             <a href="#">Berita Terkini</a>
-                                        </div><!-- /.post-meta-cat -->
+                                        </div>
                                         <a class="post__author" href="#">Administrator</a>
-                                    </div><!-- /.post-meta -->
-                                    <h4 class="post__title"><a href="#">{{ $artcls->judul }}
-                                        </a></h4>
+                                    </div>
+
+                                    <h4 class="post__title">
+                                        <a href="{{ route('article.show', $artcls->id) }}">
+                                            {{ $artcls->judul }}
+                                        </a>
+                                    </h4>
+
                                     <p class="post__desc">
-                                        {{ substr(strip_tags(htmlspecialchars_decode($artcls->content)), 0, 100) }} ...</a>
+                                        {{ Str::limit(strip_tags(htmlspecialchars_decode($artcls->content)), 100) }}
                                     </p>
+
                                     <a href="{{ route('article.show', $artcls->id) }}"
-                                        class="btn btn__secondary btn__outlined btn__custom">
+                                    class="btn btn__secondary btn__outlined btn__custom">
                                         <i class="icon-arrow-right"></i>
                                         <span>Baca Selengkapnya</span>
                                     </a>
-                                </div><!-- /.post-content -->
-                            </div><!-- /.post-item -->
-                        </div><!-- /.col-lg-4 -->
+                                </div>
+                            </div>
+                        </div>
                     @empty
                         <div class="col-lg-12 text-center mx-auto mt-3">
-                            <h1 class="mb-2">Tidak ada artikel yang ada disini</h1>
-                            <p class="mb-4">Kami sedang menyiapkan artikel atau berita bagi anda.
-                            </p>
+                            <h1 class="mb-2">Tidak ada artikel</h1>
+                            <p>Kami sedang menyiapkan artikel atau berita untuk Anda.</p>
                         </div>
                     @endforelse
                 </div><!-- /.row -->
-            </div><!-- /.container -->
-        </section><!-- /.blog Grid -->
-    </div>
-@endsection
+            </section><!-- /.blog Grid -->
+        </div>
+    @endsection

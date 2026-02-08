@@ -42,7 +42,7 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'thumbnail' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
+            'thumbnail' => 'required|file|image|mimes:jpeg,png,jpg|max:5120',
         ]);
 
         if ($request->hasFile('thumbnail')) {

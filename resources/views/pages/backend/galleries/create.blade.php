@@ -70,7 +70,7 @@
                                             required
                                         >
                                         <label class="custom-file-label" for="fotoInput" id="fotoLabel">
-                                            Pilih file gambar...
+                                            Pilih File Gambar Max 5MB...
                                         </label>
                                     </div>
                                 </div>
